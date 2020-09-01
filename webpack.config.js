@@ -45,7 +45,6 @@ module.exports = {
         ]
     },
     plugins: [
-
         new CleanWebpackPlugin({
             dry: true
                 // dry:控制文件的删除，默认false
@@ -61,5 +60,24 @@ module.exports = {
         }),
         // HtmlWebpackPlugin.template:指定生成html的模板
 
-    ]
+    ],
+    devtool: 'inline-source-map',
+    // 择一种 source map 格式来增强调试过程。不同的值会明显影响到构建(build)和重新构建(rebuild)的速度。
+    // 一般开发时会选择这种设置，打包上线后一般会选择none
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        port: 9000,
+        https: true
+    },
+    /**安装后webpack-dev-server  进行配置
+     * contentBase：告诉开发服务器(dev server)，在哪里查找文件
+     *  port: 设置端口号
+     * host:指定使用一个 host。默认是 localhost。如果你希望服务器外部可访问，指定如  "0.0.0.0"
+     * hot: true 启用 webpack 的模块热替换特性：
+     * https: true 默认情况下，dev-server 通过 HTTP 提供服务。也可以选择带有 HTTPS 的 HTTP/2 提供服务
+     * lazy: true 当启用 lazy 时，dev-server 只有在请求时才编译包(bundle)。这意味着 webpack 不会监视任何文件改动。我们称之为“惰性模式”。
+
+
+
+     */
 }
