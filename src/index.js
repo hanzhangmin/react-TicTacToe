@@ -1,20 +1,14 @@
 import _ from "lodash"
-import "./style.css"
-import Img from "./desk_005.jpg"
-import data from "./data.xml"
+import printMe from "./print"
 
 function component() {
     var element = document.createElement("div");
+    var btn = document.createElement('button');
     // Lodash(目前通过一个Script脚本引入)对于执行这一行是必须的
     element.innerHTML = _.join(['hello', 'webpack', '!'], ' ');
-    var img = new Image();
-    img.src = Img;
-    element.appendChild(img);
-    var icon = document.createElement("span");
-    icon.className = 'icon-xihuan';
-    element.appendChild(icon);
-    // element.className = "div";
-    console.log(data);
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = printMe;
+    element.appendChild(btn);
     return element
 }
 document.body.appendChild(component())
