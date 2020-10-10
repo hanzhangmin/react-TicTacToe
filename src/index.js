@@ -1,32 +1,123 @@
-import _ from "lodash"
-import printMe from "./print"
-import "./style.css"
-import {
-    del
-} from "./main"
+const React = require("react");
+const ReactDom = require("react-dom");
+const {
+    Timer
+} = require("./components/Timer")
+// // const Hello = require('./Hello.jsx');
+// import {
+//     Hello
+// } from "@/components/Hello"
 
-function component() {
-    var element = document.createElement("div");
-    var btn = document.createElement('button');
-    // Lodash(目前通过一个Script脚本引入)对于执行这一行是必须的
-    element.innerHTML = _.join(['hello', 'webpack', '!'], ' ');
-    btn.innerHTML = `Click me and check the console! del(10,5)=${ del(10,5)}`;
-    btn.onclick = printMe;
-    element.appendChild(btn);
-    return element
-}
-let element = component()
-document.body.appendChild(element)
-if (module.hot) {
-    module.hot.accept('./print.js', function() {
-        console.log('Accepting the updated printMe module!');
-        printMe();
-        /*
-            这样虽然实现了更新， 但是当你点击button时， 输出的仍旧是旧的函数
-            修改方式：加上下面三行代码
-                */
-        document.body.removeChild(element);
-        element = component(); // 重新渲染页面后，component 更新 click 事件处理
-        document.body.appendChild(element);
-    })
-}
+// import {
+//     Child
+// } from "@/components/Child"
+// // console.log();
+
+// // react 最基本的语法，但是，平常开发过程中不会这样写，这样创建dom很繁琐  没有html语法简单
+// // let h1 = React.createElement('h1', null, "这是一个react例子！");
+// // let div1 = React.createElement("div", null, "这是一个div父元素呀", h1);
+// // jsx语法是将其编译成 上面的语句规范，然后进行渲染的
+
+
+// /**
+//  * 在jsx表达式中，将js语句放进  {}中
+//  */
+// let message = " 你好呀， react! ";
+
+// // function Hello(props) {
+// //     console.log(props);
+
+// //     return <div > 这是一个react组件 < /div>
+// // }
+
+// let arr = [ <
+//     h1 > 这是h1标签 < /h1>, <
+//     h2 > 这是h2标签 < /h2>, <
+//     h3 > 这是h3标签 < /h3>,
+// ];
+
+
+// let obj = {
+//     name: "hzm",
+//     age: 18
+// }
+
+// let arrstr = [{
+//         id: 0,
+//         name: "牡丹花"
+//     },
+//     {
+//         id: 0,
+//         name: "桃花"
+//     },
+//     {
+//         id: 0,
+//         name: "桔梗花"
+//     },
+//     {
+//         id: 0,
+//         name: "水仙花"
+//     },
+// ]
+
+
+
+
+// const div1 = < div >
+//     <
+//     h1 > {
+//         message
+//     } < /h1> 
+
+//     <
+//     hr / >
+
+//     {
+//         arr
+//     }
+
+//     <
+//     hr / >
+
+//     {
+//         obj.name
+//     }
+
+//     <
+//     hr / >
+
+//     <
+//     ul > {
+//         arrstr.map(item => <
+//             li key = {
+//                 item.id
+//             } > {
+//                 item.name
+//             } < /li>
+//         )
+//     } <
+//     /ul> 
+
+//     <
+//     hr / >
+
+//     <
+//     Hello {
+//         ...obj
+//     } >
+//     <
+//     /Hello >
+
+//     <
+//     Child {
+//         ...obj
+//     } >
+//     <
+//     /Child>
+
+//     <
+//     /
+// div >
+
+
+ReactDom.render( < Timer > < /Timer>, document.getElementById("app"));
