@@ -5,6 +5,7 @@ export default class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      history: {},
       squares: Array(9),
       white: {},
       block: {},
@@ -12,11 +13,9 @@ export default class Board extends React.Component {
       span: 0,
     };
   }
-
   //鼠标点击函数
   handleClick(i) {
     let squares = this.state.squares.slice();
-    // console.log(squares[i] != undefined);
     if (squares[i] != null) {
       alert("不能落子！");
       return;
@@ -25,24 +24,18 @@ export default class Board extends React.Component {
     //   小于1黑子落棋，等于1 白子落棋
     if (this.state.clicked < 1) {
       squares[i] = 1;
-      let block = { ...this.state.block };
-      block[i] = i;
-      this.setState({
-        clicked: 1,
-        block: block,
-      });
-      res = this.judge(Object.values(block));
+      this.state.block[i] = i;
+      this.state.clicked = 1;
+      res = this.judge(Object.values(this.state.block));
     } else if (this.state.clicked == 1) {
       squares[i] = 0;
-      let white = { ...this.state.white };
-      white[i] = i;
-      this.setState({
-        clicked: 0,
-        white: white,
-      });
-      res = this.judge(Object.values(white));
+      this.state.white[i] = i;
+      this.state.clicked = 0;
+      res = this.judge(Object.values(this.state.white));
     }
     let span = this.state.span++;
+    this.state.history[span] = squares;
+    console.log(this.state.history);
     this.setState({
       span: ++span,
       squares: squares,
@@ -93,8 +86,29 @@ export default class Board extends React.Component {
     }
     return false;
   }
+  //二次验证
+  verify(i, j, q) {
+    if (i + q === 2 * j) {
+      switch (j - i) {
+        case 1:
+          if (i % 3 === 0) return true;
+          break;
+        case 2:
+          if (i === 2) return true;
+          break;
+        case 3:
+          if (i <= 2) return true;
+          break;
+        case 4:
+          return true;
+        default:
+          break;
+      }
+    }
+    return false;
+  }
 
-  // 游戏结束的
+  // 游戏结束
   gameOver() {
     this.setState({
       squares: Array(9).fill(undefined),
@@ -105,24 +119,6 @@ export default class Board extends React.Component {
     });
   }
 
-  verify(i, j, q) {
-    if (i + q === 2 * j) {
-      if (j - i == 1 && i % 3 == 0) {
-        return true;
-      }
-      if (j - i == 2 && i == 2) {
-        return true;
-      }
-      if (j - i == 3 && i <= 2) {
-        return true;
-      }
-      if (j - i == 4) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   renderSquare(i) {
     return (
       <Square
@@ -130,6 +126,7 @@ export default class Board extends React.Component {
         onClick={() => this.handleClick(i)}></Square>
     );
   }
+
   render() {
     return (
       <div className="chessboard-body ">
